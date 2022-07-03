@@ -1,0 +1,30 @@
+@startuml Two Modes - Technical View
+
+'!define AWSPuml https://raw.githubusercontent.com/awslabs/aws-icons-for-plantuml/v11.1/dist
+'!includeurl AWSPuml/AWSCommon.puml
+
+' Uncomment the following line to create simplified view
+!includeurl AWSPuml/AWSSimplified.puml
+
+!includeurl AWSPuml/General/Users.puml
+!includeurl AWSPuml/ApplicationIntegration/APIGateway.puml
+!includeurl AWSPuml/Serverless/Serverless.puml
+!includeurl AWSPuml/BusinessApplications/BusinessApplications.puml
+
+left to right direction
+
+Users(sources, "Users", "millions of users")
+APIGateway(gateway, "POS Gateway", "POS Gateway")
+Serverless(counter, "Counter Service", "calculate total")
+BusinessApplications(carts, "Cart Service", "cart Service")
+BusinessApplications(orders, "Order Service", "Order Service")
+BusinessApplications(products, "Product Service", "Product Service")
+
+sources --> gateway
+gateway --> carts
+gateway --> products
+gateway --> orders
+carts --> counter
+carts --> orders
+
+@enduml

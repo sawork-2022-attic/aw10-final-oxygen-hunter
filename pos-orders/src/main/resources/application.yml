@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: pos-orders
+  data:
+    mongodb:
+      host: localhost
+      port: 27017
+      username: root
+      password: example
+      database: posdb
+      authentication-database: admin
+  cloud:
+    function:
+      definition: sendOrder
+    stream:
+      function:
+        bindings:
+          supplyOrder-out-0: order-send
+      bindings:
+        order-send:
+          destination: order-channel
+
+server:
+  port: 8086
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
